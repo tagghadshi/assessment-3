@@ -10,13 +10,22 @@ public class DematAccount extends Account {
 	}
 
 	@Override
-	void deposit() {
-		
+	void deposit(double ammount) {
+		if(ammount >0) {
+			double newbalanceAmmount =ammount+getBalanceAmmount();
+			setBalanceAmmount(newbalanceAmmount);
+		}
 	}
 
 	@Override
-	void withdraw() {
-		
+	void withdraw(double ammount) {
+		if(ammount < getBalanceAmmount()) {
+			double newbalanceAmmount = getBalanceAmmount() - ammount;
+			setBalanceAmmount(newbalanceAmmount);
+		}
+		else {
+			System.out.println("Balance is Insufficient");
+		}
 	}
 
 }

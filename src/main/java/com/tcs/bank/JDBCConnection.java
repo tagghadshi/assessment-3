@@ -15,24 +15,26 @@ public class JDBCConnection {
 		System.out.println("Connection to DB successful");
 		try(Connection connnection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 				Statement statement = connnection.createStatement();){
-//			insert(statement);
+//			create(statement);
 			retrieve(statement);
+			
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	private static void insert(Statement statement) throws SQLException {
-		statement.execute("INSERT INTO REGIONS VALUES(5,'Australia')");
+	private static void create(Statement statement) throws SQLException {
+		statement.execute("INSERT INTO ADDRESS VALUES"
+				+ "(014,'007','Bakers Street','Mumbai','Maharashtra',400055,999990879)");
+		statement.execute("INSERT INTO ACCOUNTS VALUES"
+				+ "(104,'Virat Kholi',014,  90000,'2020-01-09','ACTIVE')");
 	}
 	
 	private static void retrieve(Statement statement) throws SQLException {
 		ResultSet resultSet = statement.executeQuery("Select * from accounts");
 		while (resultSet.next()) {
 			System.out.println(resultSet.getNString("OWNER_NAME"));
-//			System.out.println(resultSet.getInt(1));
-//			System.out.println(resultSet.getNString("REGION_NAME"));
 		}
 	}
 }

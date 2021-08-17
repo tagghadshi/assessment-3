@@ -6,11 +6,11 @@ public abstract class Account {
 	private String ownerName;
 	private Address address;
 	private String accountType;
-	private long balanceAmmount;
+	protected double balanceAmmount;
 	private Date createDate;
 	private STATUS  status;
 
-	public Account(String ownerName, Address address, String accountType, long balanceAmmount, Date createDate,
+	public Account(String ownerName, Address address, String accountType, double balanceAmmount, Date createDate,
 			STATUS status) {
 		this.ownerName = ownerName;
 		this.address = address;
@@ -19,8 +19,22 @@ public abstract class Account {
 		this.createDate = createDate;
 		this.status = status;
 	}
+	
+	
 
-	abstract void deposit();
+	public double getBalanceAmmount() {
+		return balanceAmmount;
+	}
 
-	abstract void withdraw();
+
+
+	public void setBalanceAmmount(double balanceAmmount) {
+		this.balanceAmmount = balanceAmmount;
+	}
+
+
+
+	abstract void deposit(double ammount);
+
+	abstract void withdraw(double ammount);
 }
