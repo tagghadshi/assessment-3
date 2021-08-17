@@ -3,29 +3,11 @@ package com.tcs.bank;
 import java.util.Date;
 
 public class SavingsAccount extends Account{
-
-	public SavingsAccount(String ownerName, Address address, String accountType, long balanceAmmount, Date createDate,
+	
+	XYZBank xyz = new XYZBank();
+	public SavingsAccount(int accountNo,String ownerName, Address address, String accountType, long balanceAmmount, Date createDate,
 			STATUS status) {
-		super(ownerName, address, accountType, balanceAmmount, createDate, status);
-	}
-
-	@Override
-	void deposit(double ammount) {
-		if(ammount >0) {
-			double newbalanceAmmount =ammount+getBalanceAmmount();
-			setBalanceAmmount(newbalanceAmmount);
-		}
-	}
-
-	@Override
-	void withdraw(double ammount) {
-		if(ammount < getBalanceAmmount()) {
-			double newbalanceAmmount = getBalanceAmmount() - ammount;
-			setBalanceAmmount(newbalanceAmmount);
-		}
-		else {
-			System.out.println("Balance is Insufficient");
-		}
-	}
+		super(accountNo, ownerName, address, accountType, balanceAmmount, createDate, status);
+	}	
 
 }

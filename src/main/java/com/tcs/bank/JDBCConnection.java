@@ -5,44 +5,41 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class JDBCConnection {
-	public static Statement DataBaseConnection() {
-		String DB_URL = "jdbc:mysql://localhost/xyzbank";
-		String DB_USER = "root";
-		String DB_PASSWORD = "Nuvelabs123$";
-		
-		System.out.println("Connection to DB successful");
-		try(Connection connnection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-				Statement statement = connnection.createStatement();){
-//			create(statement);
-//			retrieve(statement);
-			updateAmount(statement,101,50000);
-			
-			
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
+
+	public static double getAmountforUser(Statement statement, int accountNo) throws SQLException {
+		ResultSet resultSet = statement.executeQuery("Select * from accounts where account_no=" + accountNo);
+		while (resultSet.next()) {
+			return resultSet.getDouble("BALANCE_AMOUNT");
 		}
-		return null;
+		return 0;
 	}
-	
-	public static void updateAmount(Statement statement, int accountNo,double amount) throws SQLException {
-		int resultSet = statement.executeUpdate("Update Accounts Set Balance_Amount ="+amount+ "where Account_No = 101");
-		System.out.println(resultSet);
+
+	public static void updateAmount(Statement statement, int accountNo, double amount) throws SQLException {
+		int resultSet = statement
+				.executeUpdate("Update Accounts Set Balance_Amount =" + amount + "where Account_No =" + accountNo);
+		if (resultSet == 1)
+			System.out.println("Update Succesful");
+		else
+			System.out.println("Update Failed");
 	}
 
 	public static void create(Statement statement) throws SQLException {
-		statement.execute("INSERT INTO ADDRESS VALUES"
-				+ "(014,'007','Bakers Street','Mumbai','Maharashtra',400055,999990879)");
-		statement.execute("INSERT INTO ACCOUNTS VALUES"
-				+ "(104,'Virat Kholi',014,  90000,'2020-01-09','ACTIVE')");
+		statement.execute(
+				"INSERT INTO ADDRESS VALUES" + "(014,'007','Bakers Street','Mumbai','Maharashtra',400055,999990879)");
+		statement.execute("INSERT INTO ACCOUNTS VALUES" + "(104,'Virat Kholi',014,  90000,'2020-01-09','ACTIVE')");
 	}
-	
-	public static void retrieve(Statement statement) throws SQLException {
+
+	public static List<String> retrieve(Statement statement) throws SQLException {
 		ResultSet resultSet = statement.executeQuery("Select * from accounts");
+		List<String> rs = new ArrayList<String>();
 		while (resultSet.next()) {
-			System.out.println(resultSet.getNString("OWNER_NAME"));
+			rs.add("[Acc_No :" + resultSet.getInt("ACCOUNT_NO") + " Name :" + resultSet.getNString("OWNER_NAME")
+					+ " Balance :" + resultSet.getDouble("BALANCE_AMOUNT") + "]");
 		}
+		return rs;
 	}
 }
